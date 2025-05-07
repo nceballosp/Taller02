@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const pokeneas = require('./pokeneas');
+const pokeneas = require('./util/pokeneas');
+
 
 router.get('/', (req, res) => {
     const number = Math.floor(Math.random() * pokeneas.length);
-    const { phrase, ...noPhrase } = pokeneas[number];
-    res.send(noPhrase);
+    const { phrase, ...viewData } = pokeneas[number];
+    res.render('index', { pokenea: viewData });
   })
 
 router.get('/phrase', (req, res) => {
     const number = Math.floor(Math.random() * pokeneas.length);
-    const phrase = pokeneas[number].phrase;
-    res.send(phrase);
+    const viewData = pokeneas[number];
+    res.render('phrase', { pokenea: viewData});
 })
 module.exports = router;
